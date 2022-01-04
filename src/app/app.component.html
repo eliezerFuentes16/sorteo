@@ -1,0 +1,63 @@
+<div class="flex-container">
+	<div class="flex-item-resultados" *ngIf="spinner">
+		<mat-spinner class="spinner" *ngIf="verSpinner"></mat-spinner>
+		<div>
+			<h2 *ngIf="!verSpinner" class="resultado">Resultado</h2>
+			<button *ngIf="!verSpinner"
+				mat-fab color="primary" class="boton-ganador">
+				{{ganador}}
+			</button>
+			<div *ngIf="!verSpinner">
+				<h2 *ngIf="ganaste" class="green">Has Ganado {{ ganancia }}$</h2>
+				<h2 *ngIf="!ganaste" class="red">Has Perdido</h2>
+				<a class="volver-jugar" (click)="volverAJugar()">Volver a Jugar</a>
+			</div>
+		</div>
+	</div>
+	<div class="flex-item-balls" *ngIf="!spinner">
+		<h2>Elija un numero</h2>
+		<div class="div-botones-seleccionar">
+			<button *ngFor="let boton of color; let i = index"  [attr.data-index]="i" 
+		  	class="botones"
+			 mat-fab color="{{ color[i] }}" 
+		 	(click)="elegirBall(i)">
+		    	{{i+1}}
+			</button>
+		</div>
+	</div>
+
+	<div class="flex-item-eleccion">
+		<div class="div-detalles-sorteo">
+			<h2 class="apuesta">Apuesta</h2>
+			<div class="div-botones-elegidos">
+				<button md-colors="{backgroundColor:'blue-700'}"
+					*ngFor="let botonElegir of botonesElegir; let i = index"
+					class="botones-elegidos"
+					mat-fab 
+					mat-fab color="{{botonElegir.color}}"
+					matTooltip="Apostado: {{botonElegir.apuesta}}$"
+					>
+						{{botonElegir.number}}
+				</button>
+				<button 
+					*ngFor="let botonNoElegido of noEscogidas; let i = index"
+					class="botones-elegidos"
+					mat-fab color="{{botonNoElegido.color}}">
+						{{botonNoElegido.number}}
+				</button>
+			</div>
+
+			<div class="div-container-input">
+				<div class="div-agregar-apuesta">
+					<mat-form-field class="example-full-width input-apostar">
+						<span class="escogidos" matPrefix>x{{seleccionada}} &nbsp;&nbsp;</span>
+						<input type="number" class="" matInput placeholder="Cantidad a apostar"  [(ngModel)]="cantidadApostar">
+					</mat-form-field>&nbsp;
+					<button  mat-raised-button color="primary" (click)="botonOk()" class="boton-ok">Ok</button>
+				</div>
+				<h2 >Total: ${{cantidadTotal}}</h2>
+				<button class="boton-sortear" (click)="empezarApuesta()" mat-raised-button color="primary">Empezar Apuesta</button>
+			</div>
+		</div>
+	</div>
+</div>
